@@ -3,156 +3,112 @@ package Biblioteca;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Usuario {
-    //Atributos
-    private String nombre = new String();
-    private String apellidos = new String();
-    private String nif = new String();
-    private String contraseña = new String();
+public class Usuario extends Persona {
+    /*Atributos*/
+    private String telefono;
+    private String direccion;
+    private String codigoPostal;
+    private String correoElectronico;
+    private ArrayList<Reserva> listaResevas;
 
-    //Constructor completo
-    public Usuario(String nombre, String apellidos, String nif, String contraseña) {
-        //Instancializamos
-        nombre = new String();
-        apellidos = new String();
-        nif = new String();
-        contraseña = new String();
+    /*Constructores*/
 
-        this.setNombre(nombre);
-        this.setApellidos(apellidos);
-        this.setNif(nif);
-        this.setContraseña(contraseña);
-    }
-    //Construcor copia
-    public Usuario(Usuario usuario){
-        this(usuario.getNombre(), usuario.getApellidos(), usuario.getNif(), usuario.getContraseña());
-    }
-    //Constructor vacío
-    public Usuario() {
-        this(null, null, null, null);
+    /*Constructor completo*/
+
+    public Usuario(String nombre, String apellido1, String apellido2, Integer edad, String telefono, String direccion, String codigoPostal, String correoElectronico, ArrayList<Reserva> listaResevas) {
+        super(nombre, apellido1, apellido2, edad);
+
+        this.telefono = new String();
+        this.direccion = new String();
+        this.codigoPostal = new String();
+        this.correoElectronico = new String();
+        this.listaResevas = new ArrayList();
+
+        this.setTelefono(telefono);
+        this.setApellido1(apellido1);
+        this.setApellido2(apellido2);
+        this.setCodigoPostal(codigoPostal);
+        this.setCorreoElectronico(correoElectronico);
+        this.setListaResevas(listaResevas);
+
     }
 
-    //Metodo toString
+    /*Constructor vacio*/
+    public Usuario(){
+        this(null, null, null, null, null, null, null, null, null);
+    }
+
+    /*Getters y Setters*/
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getCodigoPostal() {
+        return codigoPostal;
+    }
+
+    public void setCodigoPostal(String codigoPostal) {
+        this.codigoPostal = codigoPostal;
+    }
+
+    public String getCorreoElectronico() {
+        return correoElectronico;
+    }
+
+    public void setCorreoElectronico(String correoElectronico) {
+        this.correoElectronico = correoElectronico;
+    }
+
+    public ArrayList<Reserva> getListaResevas() {
+        return listaResevas;
+    }
+
+    public void setListaResevas(ArrayList<Reserva> listaResevas) {
+        this.listaResevas = listaResevas;
+    }
+    /*Metodo toString*/
+
     @Override
     public String toString() {
-        return "usuario{" +
-                " Nombre= " + nombre +
-                ", Apellidos= " + apellidos +
-                ", NIF= " + nif +
-                ", Contraseña= " + contraseña +
-                "}";
+        return "Usuario{" +
+                ", Telefono= " + telefono + "\n" +
+                ", Direccion= " + direccion + "\n" +
+                ", CodigoPostal= " + codigoPostal + "\n" +
+                ", CorreoElectronico= " + correoElectronico + "\n" +
+                ", ListaResevas= " + listaResevas +
+                '}';
     }
-
-    //Getters y Setters
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellidos() {
-        return apellidos;
-    }
-
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
-    }
-
-    public String getNif() {
-        return nif;
-    }
-
-    public void setNif(String nif) {
-        this.nif = nif;
-    }
-
-    public String getContraseña() {
-        return contraseña;
-    }
-
-    public void setContraseña(String contraseña) {
-        /*Ponemos un controlador en la contraseña para que siempre sea mayor de 8 caracteres*/
+    /*Otros metodos*/
+    @Override
+    public void solicitarDatosPersona(ArrayList<Persona> listaPersonas){
         Scanner teclado = new Scanner(System.in);
-        while(contraseña.length()<8){
-            System.out.println("Introduce la contraseña, debe tener minimo 8 caracteres: ");
-            contraseña = teclado.nextLine();
-        }
-        this.contraseña = contraseña;}
-
-    //Otros metodos
-
-    /*Solicitará los datos para crear un objeto usuario
-     *y añadirá dicha usuario a una lista de usuarios que recibirá como parámetro el método.
-     *(método static)
-     */
-    public static void añadirUsuario(ArrayList<Usuario> listaUsuario){
-        Scanner teclado = new Scanner(System.in);
-        Usuario usuario = new Usuario();
         System.out.println("Introduce el nombre: ");
-        usuario.setNombre(teclado.nextLine());
-        System.out.println("Introduce los apellidos: ");
-        usuario.setApellidos(teclado.nextLine());
-        System.out.println("Introduce el NIF: ");
-        usuario.setNif(teclado.nextLine());
-        listaUsuario.add(usuario);
-        System.out.println("");
-    }
-
-    /*Solicitará  un nif, lo buscará y
-     *lo eliminará de la lista que recibirá como parámetro el método.
-     *(método static)
-     */
-    public static void eliminarUsuario(ArrayList<Usuario> listaUsuario){
-        Scanner teclado = new Scanner(System.in);
-        String texto = new String();
-        System.out.println("Introduce el nif del usuario ");
-        texto = teclado.nextLine();
-        boolean encontrado = false;
-        int i = 0;
-        int posicion = -1;
-        while( i<listaUsuario.size()){
-            if(texto.equals(listaUsuario.get(i).getNif())){
-                encontrado = true;
-                posicion = i;
-                listaUsuario.remove(i);
-            }
-            i++;
-
-            if(encontrado){
-                System.out.println("El usuario que se ha eliminado estaba en la posición: "+posicion);
-            }else{
-                System.out.println("No se ha encontrado ninguna coincidencia");
-            }
-        }
-        System.out.println("");
-    }
-    /*Solicitará  un nif por consola y
-     *buscara en la lista de personas que pasaremos por parametro
-     * devolviendo toda la información (en el caso de encontrar coincidencia)
-     */
-    public static int buscarUsuarioNIF(ArrayList<Usuario> listaUsuarios){
-        Scanner teclado = new Scanner(System.in);
-        String texto = new String();
-        System.out.println("Introduce el NIF de la usuario: ");
-        texto = teclado.nextLine();
-        boolean encontrado = false;
-        int posicion = -1;
-        int i = 0;
-        while(!encontrado && i<listaUsuarios.size()){
-            if(listaUsuarios.get(i).getNif().equals(texto)){
-                encontrado = true;
-                System.out.println("Información del usuario: ");
-                System.out.println(listaUsuarios.get(i).toString());
-                posicion = i;
-            }
-            i++;
-        }
-        if(!encontrado){
-            System.out.println("No se ha encontrado ninguna coincidencia");
-        }
-        System.out.println("");
-        return posicion;
+        super.setNombre(teclado.nextLine());
+        System.out.println("Introduce el primer apellido: ");
+        super.setApellido1(teclado.nextLine());
+        System.out.println("Introduce el segundo apellido: ");
+        super.setApellido2(teclado.nextLine());
+        System.out.println("Introduce la edad: ");
+        super.setEdad(teclado.nextInt());
+        System.out.println("Introduce el telefono: ");
+        this.setTelefono(teclado.nextLine());
+        System.out.println("Introduce la direccion: ");
+        this.setDireccion(teclado.nextLine());
+        System.out.println("Introduce el codigo postal: ");
+        this.setCodigoPostal(teclado.nextLine());
+        System.out.println("Introduce el correo electronico: ");
+        this.setCorreoElectronico(teclado.nextLine());
     }
 }

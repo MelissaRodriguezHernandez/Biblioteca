@@ -7,28 +7,26 @@ public class Biblioteca {
     /*Atributos*/
     private String nombre ;
     private ArrayList<Libro>  listaLibros ;
-    private ArrayList<Persona> listaPersonal ;
-    private ArrayList<Usuario> listaUsuarios;
+    private ArrayList<Persona> listaPersonas ;
+
 
     /*Constructor completo*/
-    public Biblioteca(String nombre, ArrayList<Libro> listaLibros, ArrayList<Persona> listaPersonal, ArrayList<Usuario> listaUsuarios) {
+    public Biblioteca(String nombre, ArrayList<Libro> listaLibros, ArrayList<Persona> listaPersonas) {
         this.nombre = new String();
         this.listaLibros = new ArrayList();
-        this.listaPersonal = new ArrayList();
-        this.listaUsuarios = new ArrayList();
+        this.listaPersonas = new ArrayList();
 
         this.setNombre(nombre);
         this.setListaLibros(listaLibros);
-        this.setListaPersonal(listaPersonal);
-        this.setListaUsuarios(listaUsuarios);
+        this.setListaPersonas(listaPersonas);
     }
     /*Constructor vacio*/
     public Biblioteca(){
-        this(null, null, null, null);
+        this(null, null, null);
     }
     /*Constructor copia*/
     public Biblioteca(Biblioteca biblioteca){
-        this(biblioteca.getNombre(), biblioteca.getListaLibros(), biblioteca.getListaPersonal(), biblioteca.getListaUsuarios());
+        this(biblioteca.getNombre(), biblioteca.getListaLibros(), biblioteca.getListaPersonas());
     }
 
     /*Metodo toString*/
@@ -37,8 +35,7 @@ public class Biblioteca {
         return "Biblioteca{" +
                 " Nombre='" + nombre +
                 ", Lista de Libros= " + listaLibros +
-                ", Lista del Personal= " + listaPersonal +
-                ", Lista de Usuarios= "+ listaUsuarios+
+                ", Lista del Personal= " + listaPersonas +
                 "}";
     }
 
@@ -61,69 +58,17 @@ public class Biblioteca {
     public void setListaLibros(ArrayList<Libro> listaLibros) {
         this.listaLibros = listaLibros;
     }
-    public ArrayList<Persona> getListaPersonal() {
-        return listaPersonal;
+    public ArrayList<Persona> getListaPersonas() {
+        return listaPersonas;
     }
-    public void setListaPersonal(ArrayList<Persona> listaPersonal) {
-        this.listaPersonal = listaPersonal;
-    }
-    public ArrayList<Usuario> getListaUsuarios() {
-        return listaUsuarios;
-    }
-    public void setListaUsuarios(ArrayList<Usuario> listaUsuarios) {
-        this.listaUsuarios = listaUsuarios;
+    public void setListaPersonas(ArrayList<Persona> listaPersonal) {
+        this.listaPersonas = listaPersonal;
     }
 
     /*Otros Metodos*/
-
-    /*Mostrar libros.
-     *Imprimirá por pantalla toda la lista de libros.
-     */
-    public static void mostrarLibros(ArrayList<Libro> listaLibros){
-        for (int i = 0; i <= listaLibros.size(); i++) {
-            System.out.println(listaLibros.get(i).toString());
-            System.out.println("");
-        }
-    }
-
-    /*Mostrar libros disponibles.
-     *Solo imprime la lista de los libros disponibles.
-     */
-    public static void mostrarLibrosDisponibles(ArrayList<Libro> listaLibros){
-        for (int i = 0; i <= listaLibros.size(); i++) {
-            if (listaLibros.get(i).getnCopiasDisponibles()>0){
-                System.out.println(listaLibros.get(i).toString());
-            }
-        }
-        System.out.println("");
-    }
-
-    /*Imprimirá por pantalla toda la lista de personas
-     *
-     */
-    public static void mostrarPersonal(ArrayList<Persona> listaPersonal){
-        for (int i = 0; i <= listaPersonal.size(); i++) {
-            System.out.println(listaPersonal.get(i).toString());
-            System.out.println("");
-        }
-    }
-
-    /*Imprimirá por pantalla toda la lista de usuarios.
-     *
-     */
-    public static void mostrarUsuarios(ArrayList<Usuario> listaUsuarios){
-        for (int i = 0; i <= listaUsuarios.size(); i++) {
-            System.out.println(listaUsuarios.get(i).toString());
-            System.out.println("");
-        }
-    }
-
-    /*Main donde se concentra
-     *el codigo en menus con switches para interactuar
-     */
     public static void main(String[] args) {
         Scanner teclado = new Scanner(System.in);
-        ArrayList<Libro>  listaLibros = new ArrayList();
+        ArrayList<Libro> listaLibros = new ArrayList();
         ArrayList<Persona> listaPersonal = new ArrayList();
         ArrayList<Usuario> listaUsuarios = new ArrayList();
         ArrayList<Reserva> listaReserva = new ArrayList();
@@ -136,7 +81,7 @@ public class Biblioteca {
             /*Menú principal con las redirecciones a los pequeños menús de gestiones*/
             int opcionMenu;
             System.out.println("Elije un menú: ");
-            System.out.println("1. || Gestión de Personal ||{Añadir persona, Eliminar persona, Buscar persona por NIF, Ver listado del personal}");
+            System.out.println("1. || Gestión de Personal ||{Añadir bibliotecario, Eliminar bibliotecario, Buscar bibliotecario por NIF, Ver listado del personal}");
             System.out.println("2. || Gestión de Usuarios ||{Añadir usuario, Eliminar Usuario, Buscar usuario por NIF, Ver listado de usuarios}");
             System.out.println("3. || Gestión de Reservas ||{Reservar un libro, Devolver un Libro, Ver lista de libros Disponibles}");
             System.out.println("4. || Gestión de Libros ||{Añadir Libro, Eliminar Libro, Buscar libro por isbn, Buscar libro por título, Ver lista de Libros, Ver cantidad de libros}");
@@ -154,16 +99,12 @@ public class Biblioteca {
                 opciónM1 = teclado.nextInt();
                 switch (opciónM1){
                     case 1:
-                        Persona.añadirPersona(listaPersonal);
                         break;
                     case 2:
-                        Persona.eliminarPersona(listaPersonal);
                         break;
                     case 3:
-                        Persona.buscarPersonaNIF(listaPersonal);
                         break;
                     case 4:
-                        mostrarPersonal(listaPersonal);
                     default:
                         /*Si la persona introduce un opción no valida dara un mensaje de advertencia
                          *y se ira directamente a la opción de continuar
@@ -182,16 +123,12 @@ public class Biblioteca {
                 opciónM2 = teclado.nextInt();
                 switch (opciónM2) {
                     case 1:
-                        Usuario.añadirUsuario(listaUsuarios);
                         break;
                     case 2:
-                        Usuario.eliminarUsuario(listaUsuarios);
                         break;
                     case 3:
-                        Usuario.buscarUsuarioNIF(listaUsuarios);
                         break;
                     case 4:
-                        mostrarUsuarios(listaUsuarios);;
                         break;
                     default:
                         /*Si la persona introduce un opción no válida dara un mensaje de advertencia
@@ -210,13 +147,10 @@ public class Biblioteca {
                 opciónM3 = teclado.nextInt();
                 switch (opciónM3){
                     case 1:
-                            Reserva.hacerReserva(listaReserva, listaUsuarios, listaLibros);
                         break;
                     case 2:
-                            Reserva.eliminarReserva(listaReserva);
                         break;
                     case 3:
-                            mostrarLibrosDisponibles(listaLibros);
                         break;
                     default:
                         /*Si la persona introduce un opción no válida dara un mensaje de advertencia
@@ -238,21 +172,16 @@ public class Biblioteca {
                 opciónM4 = teclado.nextInt();
                 switch (opciónM4){
                     case 1:
-                        Libro.añadirLibro(listaLibros);
                         break;
                     case 2:
-                        Libro.eliminarLibro(listaLibros, listaReserva);
                         break;
                     case 3:
-                        Libro.buscarLibroIsbn(listaLibros);
                         break;
                     case 4:
-                        Libro.buscarLibroTitulo(listaLibros);
+                        break;
                     case 5:
-                        mostrarLibros(listaLibros);
                         break;
                     case 6:
-                        Libro.mostrarCantidadLibros(listaLibros);
                         break;
                     default:
                         /*Si la persona introduce un opción no válida dara un mensaje de advertencia
